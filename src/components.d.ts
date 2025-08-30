@@ -12,6 +12,7 @@ declare module 'vue' {
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     ImageSync: typeof import('./components/ImageSync/index.vue')['default']
     PlayMusic: typeof import('./components/PlayMusic/index.vue')['default']
+    PostgreSQLDemo: typeof import('./components/PostgreSQLDemo/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     StarsBackground: typeof import('./components/StarsBackground/index.vue')['default']

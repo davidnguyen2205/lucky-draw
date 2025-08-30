@@ -33,32 +33,32 @@ export const usePrizeConfig = defineStore('prize', {
     }
   },
   getters: {
-    // 获取全部配置
+    // Get all configurations
     getPrizeConfigAll(state) {
       return state.prizeConfig
     },
-    // 获取奖品列表
+    // Get prize list
     getPrizeConfig(state) {
       return state.prizeConfig.prizeList
     },
-    // 根据id获取配置
+    // Get configuration by id
     getPrizeConfigById(state) {
       return (id: number | string) => {
         return state.prizeConfig.prizeList.find(item => item.id === id)
       }
     },
-    // 获取当前奖项
+    // Get current prize
     getCurrentPrize(state) {
       return state.prizeConfig.currentPrize
     },
-    // 获取临时的奖项
+    // Get temporary prize
     getTemporaryPrize(state) {
       return state.prizeConfig.temporaryPrize
     },
 
   },
   actions: {
-    // 设置奖项
+    // Set prize
     setPrizeConfig(prizeList: IPrizeConfig[]) {
       this.prizeConfig.prizeList = prizeList
     },

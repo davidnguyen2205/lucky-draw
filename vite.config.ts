@@ -40,22 +40,22 @@ export default defineConfig(({ mode }) => {
         ext: '.gz',
       }),
       visualizer({
-        emitFile: true, // 是否被触摸
-        filename: 'test.html', // 生成分析网页文件名
-        open: true, // 在默认用户代理中打开生成的文件
-        gzipSize: true, // 从源代码中收集 gzip 大小并将其显示在图表中
-        brotliSize: true, // 从源代码中收集 brotli 大小并将其显示在图表中
+        emitFile: true, // Whether to be touched
+        filename: 'test.html', // Generated analysis webpage filename
+        open: true, // Open the generated file in the default user agent
+        gzipSize: true, // Collect gzip size from source code and display it in the chart
+        brotliSize: true, // Collect brotli size from source code and display it in the chart
       }),
 
       createSvgIconsPlugin({
-        // 指定需要缓存的图标文件夹
+        // Specify the icon folder that needs to be cached
         iconDirs: [path.resolve(process.cwd(), 'src/icons')],
-        // 指定symbolId格式
+        // Specify symbolId format
         symbolId: 'icon-[dir]-[name]',
       }),
       AutoImport({
         resolvers: [
-          // 自动导入图标组件
+          // Auto import icon components
           IconsResolver({
             prefix: 'Icon',
           }),
@@ -64,7 +64,7 @@ export default defineConfig(({ mode }) => {
       }),
       Components({
         resolvers: [
-          // 自动注册图标组件
+          // Auto register icon components
           IconsResolver({
             enabledCollections: ['ep'],
           }),
@@ -93,11 +93,11 @@ export default defineConfig(({ mode }) => {
       port: 6719,
       proxy: {
         '/api': {
-          target: env.VITE_BASE_URL,
-          // 是否跨域
+          target: 'http://localhost:3000',
+          // Whether cross-origin
           changeOrigin: true,
-          // 路径重写
-          rewrite: path => path.replace(/^\/api/, ''),
+          // Keep /api prefix for backend routes
+          // rewrite: path => path.replace(/^\/api/, ''),
         },
       },
     },
@@ -110,20 +110,20 @@ export default defineConfig(({ mode }) => {
       minify: 'terser',
       terserOptions: {
         compress: {
-          // 生产环境时移除console
+          // Remove console in production environment
           drop_console: true,
           drop_debugger: true,
         },
       },
-      //   关闭文件计算
+      //   Close file calculation
       reportCompressedSize: false,
-      //   关闭生成map文件 可以达到缩小打包体积
-      sourcemap: false, // 这个生产环境一定要关闭，不然打包的产物会很大
+      //   Close generating map files to reduce package size
+      sourcemap: false, // This must be turned off in production environment, otherwise the packaged product will be very large
       rollupOptions: {
         output: {
-          chunkFileNames: `js/${chunkName}-[hash].js`, // 引入文件名的名称
-          entryFileNames: `js/${chunkName}-[hash].js`, // 包的入口文件名称
-          assetFileNames: `[ext]/${chunkName}-[hash].[ext]`, // 资源文件像 字体，图片等
+          chunkFileNames: `js/${chunkName}-[hash].js`, // Name of the imported file
+          entryFileNames: `js/${chunkName}-[hash].js`, // Package entry file name
+          assetFileNames: `[ext]/${chunkName}-[hash].[ext]`, // Asset files like fonts, images, etc.
           manualChunks(id: any): string {
             if (id.includes('node_modules')) {
               return id
@@ -136,9 +136,9 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-    // 使用这个必须在上面加/// <reference types="vitest" /> 不然会有类型报错
+    // To use this, you must add /// <reference types="vitest" /> above, otherwise there will be type errors
     test: {
-      globals: true, // --> 0.8.1+  请修改成globals
+      globals: true, // --> 0.8.1+  Please change to globals
       environment: 'jsdom',
       // include: ['**/__tests__/**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
       // passWithNoTests: true,

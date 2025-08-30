@@ -31,7 +31,7 @@ async function handleFileChange(e: Event) {
 }
 function exportData() {
   let data = JSON.parse(JSON.stringify(allPersonList.value))
-  // 排除一些字段
+  // Exclude some fields
   for (let i = 0; i < data.length; i++) {
     delete data[i].x
     delete data[i].y
@@ -39,14 +39,14 @@ function exportData() {
     delete data[i].createTime
     delete data[i].updateTime
     delete data[i].prizeId
-    // 修改字段名称
+    // Modify field names
     if (data[i].isWin) {
       data[i].isWin = i18n.global.t('data.yes')
     }
     else {
       data[i].isWin = i18n.global.t('data.no')
     }
-    // 格式化数组为
+    // Format array to
     data[i].prizeTime = data[i].prizeTime.join(',')
     data[i].prizeName = data[i].prizeName.join(',')
   }
@@ -117,7 +117,7 @@ const tableColumns = [
     label: i18n.global.t('data.operation'),
     actions: [
       // {
-      //     label: '编辑',
+      //     label: 'Edit',
       //     type: 'btn-info',
       //     onClick: (row: any) => {
       //         delPersonItem(row)

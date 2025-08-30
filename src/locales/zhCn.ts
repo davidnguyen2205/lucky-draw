@@ -143,8 +143,8 @@ export default {
     delete: '删除',
     removePerson: '移入未中奖名单',
     defaultTitle: '大明内阁六部御前奏对',
-    xlsxName: '人口登记表-zhCn.xlsx',
-    readmeName: 'readme-zhCn.md',
+    xlsxName: 'population-registration-zhCn.xlsx',
+    readmeName: 'readme-zh.md',
   },
   footer: {
     'self-reflection': '行有不得，反求诸己',

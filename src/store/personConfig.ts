@@ -15,17 +15,17 @@ export const usePersonConfig = defineStore('person', {
     }
   },
   getters: {
-    // 获取全部配置
+    // Get all configurations
     getPersonConfig(state) {
       return state.personConfig
     },
-    // 获取全部人员名单
+    // Get all personnel list
     getAllPersonList(state) {
       return state.personConfig.allPersonList.filter((item: IPersonConfig) => {
         return item
       })
     },
-    // 获取未获此奖的人员名单
+    // Get personnel list who haven't won this prize
     getNotThisPrizePersonList(state: any) {
       const currentPrize = usePrizeConfig().prizeConfig.currentPrize
       const data = state.personConfig.allPersonList.filter((item: IPersonConfig) => {
@@ -34,17 +34,17 @@ export const usePersonConfig = defineStore('person', {
 
       return data
     },
-    // 获取已中奖人员名单
+    // Get list of personnel who have won prizes
     getAlreadyPersonList(state) {
       return state.personConfig.allPersonList.filter((item: IPersonConfig) => {
         return item.isWin === true
       })
     },
-    // 获取中奖人员详情
+    // Get details of personnel who won prizes
     getAlreadyPersonDetail(state) {
       return state.personConfig.alreadyPersonList
     },
-    // 获取未中奖人员名单
+    // Get list of personnel who haven't won prizes
     getNotPersonList(state) {
       return state.personConfig.allPersonList.filter((item: IPersonConfig) => {
         return item.isWin === false
@@ -52,7 +52,7 @@ export const usePersonConfig = defineStore('person', {
     },
   },
   actions: {
-    // 添加未中奖人员
+    // Add personnel who haven't won prizes
     addNotPersonList(personList: IPersonConfig[]) {
       if (personList.length <= 0) {
         return
@@ -61,7 +61,7 @@ export const usePersonConfig = defineStore('person', {
         this.personConfig.allPersonList.push(item)
       })
     },
-    // 添加已中奖人员
+    // Add personnel who have won prizes
     addAlreadyPersonList(personList: IPersonConfig[], prize: IPrizeConfig | null) {
       if (personList.length <= 0) {
         return
@@ -83,7 +83,7 @@ export const usePersonConfig = defineStore('person', {
         this.personConfig.alreadyPersonList.push(person)
       })
     },
-    // 从已中奖移动到未中奖
+    // Move from winners to non-winners
     moveAlreadyToNot(person: IPersonConfig) {
       if (person.id === undefined || person.id == null) {
         return
@@ -105,27 +105,27 @@ export const usePersonConfig = defineStore('person', {
         )
       }
     },
-    // 删除指定人员
+    // Delete specified personnel
     deletePerson(person: IPersonConfig) {
       if (person.id !== undefined || person.id != null) {
         this.personConfig.allPersonList = this.personConfig.allPersonList.filter((item: IPersonConfig) => item.id !== person.id)
         this.personConfig.alreadyPersonList = this.personConfig.alreadyPersonList.filter((item: IPersonConfig) => item.id !== person.id)
       }
     },
-    // 删除所有人员
+    // Delete all personnel
     deleteAllPerson() {
       this.personConfig.allPersonList = []
       this.personConfig.alreadyPersonList = []
     },
 
-    // 删除所有人员
+    // Reset all personnel  
     resetPerson() {
       this.personConfig.allPersonList = []
       this.personConfig.alreadyPersonList = []
     },
-    // 重置已中奖人员
+    // Reset personnel who have won prizes
     resetAlreadyPerson() {
-      // 把已中奖人员合并到未中奖人员，要验证是否已存在
+      // Merge personnel who have won prizes into those who haven't, verify if they already exist
       this.personConfig.allPersonList.forEach((item: IPersonConfig) => {
         item.isWin = false
         item.prizeName = []
@@ -138,7 +138,7 @@ export const usePersonConfig = defineStore('person', {
       this.personConfig.allPersonList = defaultPersonList
       this.personConfig.alreadyPersonList = []
     },
-    // 重置所有配置
+    // Reset all configurations
     reset() {
       this.personConfig = {
         allPersonList: [] as IPersonConfig[],
@@ -150,7 +150,7 @@ export const usePersonConfig = defineStore('person', {
     enabled: true,
     strategies: [
       {
-        // 如果要存储在localStorage中
+        // If you want to store in localStorage
         storage: localStorage,
         key: 'personConfig',
       },

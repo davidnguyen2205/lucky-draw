@@ -12,7 +12,7 @@ const { t } = useI18n()
 const globalConfig = useStore().globalConfig
 const { getImageList: localImageList } = storeToRefs(globalConfig)
 const limitType = ref('image/*')
-const imgUploadToast = ref(0) // 0是不显示，1是成功，2是失败,3是不是图片
+const imgUploadToast = ref(0) // 0 is not displayed, 1 is success, 2 is failure, 3 is not an image
 const imageDbStore = localforage.createInstance({
   name: 'imgStore',
 })

@@ -87,7 +87,7 @@ function skip(path: string) {
     </nav>
     <aside>
       <p class="p-0 m-0">
-        蜀ICP备2021028666号
+        ICP License: 2021028666
       </p>
       <p>Copyright © 2024 - All right reserved by Log1997</p>
     </aside>

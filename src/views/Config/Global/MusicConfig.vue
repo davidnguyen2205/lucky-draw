@@ -9,7 +9,7 @@ import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const audioUploadToast = ref(0) // 0是不显示，1是成功，2是失败,3是不是图片
+const audioUploadToast = ref(0) // 0 is not displayed, 1 is success, 2 is failure, 3 is not an image
 const audioDbStore = localforage.createInstance({
   name: 'audioStore',
 })

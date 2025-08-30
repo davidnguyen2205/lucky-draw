@@ -25,7 +25,7 @@ const resetDataDialogRef = ref()
 interface ThemeDaType {
   [key: string]: any
 }
-const isRowCountChange = ref(0) // 0未改变，1改变,2加载中
+const isRowCountChange = ref(0) // 0 unchanged, 1 changed, 2 loading
 const themeValue = ref(localTheme.value.name)
 const topTitleValue = ref(structuredClone(topTitle.value))
 const cardColorValue = ref(structuredClone(cardColor.value))
@@ -54,7 +54,7 @@ const schema = zod.object({
   })
     .min(1, i18n.global.t('error.minNumber1'))
     .max(100, i18n.global.t('error.maxNumber100')),
-  // 格式化
+  // Format
 
 })
 type ValidatePayload = zod.infer<typeof schema>
@@ -95,7 +95,7 @@ function resetData() {
   globalConfig.reset()
   personConfig.reset()
   prizeConfig.resetDefault()
-  // 刷新页面
+  // Refresh page
   window.location.reload()
 }
 

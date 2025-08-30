@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-// 筛选人员数据
+// Filter personnel data
 export function filterData(tableData: any[], localRowCount: number) {
   const dataLength = tableData.length
   let j = 0
@@ -10,7 +10,7 @@ export function filterData(tableData: any[], localRowCount: number) {
     tableData[i].x = i % localRowCount + 1
     tableData[i].y = j
     tableData[i].id = i
-    // 是否中奖
+    // Whether won a prize
   }
 
   return tableData
@@ -41,7 +41,7 @@ export function selectCard(cardIndexArr: number[], tableLength: number, personId
 }
 
 export function themeChange(theme: string) {
-  // 获取根html
+  // Get root html
   const html = document.querySelectorAll('html')
   if (html) {
     html[0].setAttribute('data-theme', theme)

@@ -176,7 +176,7 @@ watch(() => prizeList.value, (val: IPrizeConfig[]) => {
         :class="currentPrize.id === item.id ? 'border-1 border-dotted rounded-xl' : null"
       >
         <label class="max-w-xs mb-10 form-control">
-          <!-- 向上向下 -->
+          <!-- Up and down -->
           <div class="flex flex-col items-center gap-2 pt-5">
             <svg-icon
               class="cursor-pointer hover:text-blue-400"

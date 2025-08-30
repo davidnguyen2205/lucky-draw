@@ -15,9 +15,9 @@ ul {
     list-style: none;
 }
 
-/* 优化滚动条 */
+/* Optimize scrollbar */
 ::-webkit-scrollbar {
-    /*滚动条整体样式*/
+    /*Overall scrollbar style*/
     height: 10px;
     width: 10px;
     background: rgba(12, 9, 9, 0.1);
@@ -33,7 +33,7 @@ ul {
     border-radius: 2px;
   } */
 ::-webkit-scrollbar-thumb {
-    /* 滚动条 */
+    /* Scrollbar */
     background: #909399;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;

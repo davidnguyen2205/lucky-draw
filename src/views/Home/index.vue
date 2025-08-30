@@ -1,12 +1,6 @@
 <script setup lang="ts">
-import type { IPersonConfig } from '@/types/storeType'
 import type { Material } from 'three'
-import StarsBackground from '@/components/StarsBackground/index.vue'
-import { useElementPosition, useElementStyle } from '@/hooks/useElement'
-import i18n from '@/locales/i18n'
-import useStore from '@/store'
-import { filterData, selectCard } from '@/utils'
-import { rgba } from '@/utils/color'
+import type { IPersonConfig } from '@/types/storeType'
 import * as TWEEN from '@tweenjs/tween.js'
 import confetti from 'canvas-confetti'
 import { storeToRefs } from 'pinia'
@@ -17,6 +11,12 @@ import { nextTick, onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toast-notification'
+import StarsBackground from '@/components/StarsBackground/index.vue'
+import { useElementPosition, useElementStyle } from '@/hooks/useElement'
+import i18n from '@/locales/i18n'
+import useStore from '@/store'
+import { filterData, selectCard } from '@/utils'
+import { rgba } from '@/utils/color'
 import PrizeList from './PrizeList.vue'
 import 'vue-toast-notification/dist/theme-sugar.css'
 
@@ -32,7 +32,7 @@ const { getAllPersonList: allPersonList, getNotPersonList: notPersonList, getNot
 const { getCurrentPrize: currentPrize } = storeToRefs(prizeConfig)
 const { getTopTitle: topTitle, getCardColor: cardColor, getPatterColor: patternColor, getPatternList: patternList, getTextColor: textColor, getLuckyColor: luckyColor, getCardSize: cardSize, getTextSize: textSize, getRowCount: rowCount, getBackground: homeBackground, getIsShowAvatar: isShowAvatar } = storeToRefs(globalConfig)
 const tableData = ref<any[]>([])
-const currentStatus = ref(0) // 0为初始状态， 1为抽奖准备状态，2为抽奖中状态，3为抽奖结束状态
+const currentStatus = ref(0) // 0 is initial state, 1 is lottery preparation state, 2 is lottery in progress state, 3 is lottery end state
 const ballRotationY = ref(0)
 const containerRef = ref<HTMLElement>()
 const canOperate = ref(true)
@@ -62,7 +62,7 @@ const luckyCount = ref(10)
 const personPool = ref<IPersonConfig[]>([])
 
 const intervalTimer = ref<any>(null)
-// 填充数据，填满七行
+// Fill data, fill seven rows
 function initTableData() {
   if (allPersonList.value.length <= 0) {
     return
@@ -72,7 +72,7 @@ function initTableData() {
   const originPersonLength = originPersonData.length
   if (originPersonLength < totalCount) {
     const repeatCount = Math.ceil(totalCount / originPersonLength)
-    // 复制数据
+    // Copy data
     for (let i = 0; i < repeatCount; i++) {
       tableData.value = tableData.value.concat(JSON.parse(JSON.stringify(originPersonData)))
     }
@@ -97,7 +97,7 @@ function init() {
   renderer.value = new CSS3DRenderer()
   renderer.value.setSize(width, height * 0.9)
   renderer.value.domElement.style.position = 'absolute'
-  // 垂直居中
+  // Vertical center
   renderer.value.domElement.style.paddingTop = '50px'
   renderer.value.domElement.style.top = '50%'
   renderer.value.domElement.style.left = '50%'
@@ -119,29 +119,37 @@ function init() {
     const number = document.createElement('div')
     number.className = 'card-id'
     number.textContent = tableData.value[i].uid
-    if(isShowAvatar.value) number.style.display = 'none'
+    if (isShowAvatar.value) {
+      number.style.display = 'none'
+    }
     element.appendChild(number)
 
     const symbol = document.createElement('div')
     symbol.className = 'card-name'
     symbol.textContent = tableData.value[i].name
-    if(isShowAvatar.value) symbol.className = 'card-name card-avatar-name'
+    if (isShowAvatar.value) {
+      symbol.className = 'card-name card-avatar-name'
+    }
     element.appendChild(symbol)
 
     const detail = document.createElement('div')
     detail.className = 'card-detail'
     detail.innerHTML = `${tableData.value[i].department}<br/>${tableData.value[i].identity}`
-    if(isShowAvatar.value) detail.style.display = 'none'
+    if (isShowAvatar.value) {
+      detail.style.display = 'none'
+    }
     element.appendChild(detail)
 
-    const avatar = document.createElement('img');
-    avatar.className = 'card-avatar';
-    avatar.src = tableData.value[i].avatar;
-    avatar.alt = 'avatar';
-    avatar.style.width = '140px';
-    avatar.style.height = '140px';
-    if(!isShowAvatar.value) avatar.style.display = 'none'
-    element.appendChild(avatar);
+    const avatar = document.createElement('img')
+    avatar.className = 'card-avatar'
+    avatar.src = tableData.value[i].avatar
+    avatar.alt = 'avatar'
+    avatar.style.width = '140px'
+    avatar.style.height = '140px'
+    if (!isShowAvatar.value) {
+      avatar.style.display = 'none'
+    }
+    element.appendChild(avatar)
 
     element = useElementStyle(element, tableData.value[i], i, patternList.value, patternColor.value, cardColor.value, cardSize.value, textSize.value)
     const object = new CSS3DObject(element)
@@ -257,7 +265,7 @@ function transform(targets: any[], duration: number) {
         })
     }
 
-    // 这个补间用来在位置与旋转补间同步执行，通过onUpdate在每次更新数据后渲染scene和camera
+    // This tween is used to execute position and rotation tween synchronously, and render scene and camera after each data update through onUpdate
     new TWEEN.Tween({})
       .to({}, duration * 2)
       .onUpdate(render)
@@ -284,12 +292,12 @@ function animation() {
   if (controls.value) {
     controls.value.update()
   }
-  // 设置自动旋转
-  // 设置相机位置
+  // Set auto rotation
+  // Set camera position
   requestAnimationFrame(animation)
 }
 
-// // 旋转的动画
+// // Rotation animation
 function rollBall(rotateY: number, duration: number) {
   TWEEN.removeAll()
 
@@ -318,7 +326,7 @@ function rollBall(rotateY: number, duration: number) {
       })
   })
 }
-// 将视野转回正面
+// Turn the view back to the front
 function resetCamera() {
   new TWEEN.Tween(camera.value.position)
     .to(
@@ -381,12 +389,12 @@ async function enterLottery() {
   currentStatus.value = 1
   rollBall(0.1, 2000)
 }
-// 开始抽奖
+// Start lottery
 function startLottery() {
   if (!canOperate.value) {
     return
   }
-  // 验证是否已抽完全部奖项
+  // Verify if all prizes have been drawn
   if (currentPrize.value.isUsed || !currentPrize.value) {
     toast.open({
       message: i18n.global.t('error.personIsAllDone'),
@@ -398,7 +406,7 @@ function startLottery() {
     return
   }
   personPool.value = currentPrize.value.isAll ? notThisPrizePersonList.value : notPersonList.value
-  // 验证抽奖人数是否还够
+  // Verify if there are enough people for the lottery
   if (personPool.value.length < currentPrize.value.count - currentPrize.value.isUsedCount) {
     toast.open({
       message: i18n.global.t('error.personNotEnough'),
@@ -410,7 +418,7 @@ function startLottery() {
     return
   }
   luckyCount.value = 10
-  // 自定义抽奖个数
+  // Custom lottery count
 
   let leftover = currentPrize.value.count - currentPrize.value.isUsedCount
   const customCount = currentPrize.value.separateCount
@@ -432,7 +440,7 @@ function startLottery() {
   }
 
   toast.open({
-    // message: `现在抽取${currentPrize.value.name} ${leftover}人`,
+    // message: `Now drawing ${currentPrize.value.name} ${leftover} people`,
     message: i18n.global.t('error.startDraw', { count: currentPrize.value.name, leftover }),
     type: 'default',
     position: 'top-right',
@@ -487,7 +495,7 @@ async function stopLottery() {
       })
   })
 }
-// 继续
+// Continue
 async function continueLottery() {
   if (!canOperate.value) {
     return
@@ -516,7 +524,7 @@ function quitLottery() {
   enterLottery()
   currentStatus.value = 0
 }
-// 庆祝动画
+// Celebration animation
 function confettiFire() {
   const duration = 3 * 1000
   const end = Date.now() + duration;
@@ -575,14 +583,14 @@ function centerFire(particleRatio: number, opts: any) {
 
 function setDefaultPersonList() {
   personConfig.setDefaultPersonList()
-  // 刷新页面
+  // Refresh page
   window.location.reload()
 }
-// 随机替换数据
+// Random data replacement
 function randomBallData(mod: 'default' | 'lucky' | 'sphere' = 'default') {
-  // 两秒执行一次
+  // Execute every two seconds
   intervalTimer.value = setInterval(() => {
-    // 产生随机数数组
+    // Generate random number array
     const indexLength = 4
     const cardRandomIndexArr: number[] = []
     const personRandomIndexArr: number[] = []
@@ -603,7 +611,7 @@ function randomBallData(mod: 'default' | 'lucky' | 'sphere' = 'default') {
     }
   }, 200)
 }
-// 监听键盘
+// Listen to keyboard
 function listenKeyboard(e: any) {
   if ((e.keyCode !== 32 || e.keyCode !== 27) && !canOperate.value) {
     return
@@ -671,7 +679,7 @@ function cleanup() {
     controls.value.removeEventListener('change')
     controls.value.dispose()
   }
-  //   移除所有事件监听
+  //   Remove all event listeners
   window.removeEventListener('resize', onWindowResize)
   scene.value = null
   camera.value = null
@@ -720,7 +728,7 @@ onUnmounted(() => {
     </div>
   </div>
   <div id="container" ref="containerRef" class="3dContainer">
-    <!-- 选中菜单结构 start -->
+    <!-- Selected menu structure start -->
     <div id="menu">
       <button v-if="currentStatus === 0 && tableData.length > 0" class="btn-end " @click="enterLottery">
         {{ t('button.enterLottery') }}
@@ -797,7 +805,7 @@ onUnmounted(() => {
 }
 
 .start {
-    // 居中
+    // Center
     display: flex;
     justify-content: center;
 }
@@ -1050,7 +1058,7 @@ strong {
         inset 0 0 .5em .25em var(--glow-color);
 }
 
-// 按钮动画
+// Button animation
 @-webkit-keyframes pulsate-fwd {
     0% {
         -webkit-transform: scale(1);

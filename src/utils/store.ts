@@ -1,10 +1,10 @@
-// 提取有哪些字段
+// Extract which fields exist
 export function extractFields(data: any) {
   const item = data[0]
-  // 排除id x y，其他都加入数组
+  // Exclude id x y, add all others to array
   const keys = Object.keys(item).filter(key => key !== 'id' && key !== 'x' && key !== 'y')
   if (keys.length > 0) {
-    // 返回数组key value
+    // Return array key value
     return keys.map(key => ({ label: key, value: true }))
   }
 }

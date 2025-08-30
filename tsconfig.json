@@ -8,7 +8,7 @@
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
-     // 单元测试的支持
+     // Unit testing support
      "types": ["vitest/globals"],
     "isolatedModules": true,
     "esModuleInterop": true,

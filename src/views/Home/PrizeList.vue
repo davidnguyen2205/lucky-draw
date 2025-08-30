@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import type { IPrizeConfig } from '../../types/storeType'
-import defaultPrizeImage from '@/assets/images/龙.png'
+import defaultPrizeImage from '@/assets/images/dragon.png'
 import ImageSync from '@/components/ImageSync/index.vue'
 
 import EditSeparateDialog from '@/components/NumberSeparate/EditSeparateDialog.vue'
@@ -24,7 +24,7 @@ const prizeListContainerRef = ref()
 
 const temporaryPrizeRef = ref()
 const selectedPrize = ref<IPrizeConfig | null>()
-// 获取prizeListRef高度
+// Get prizeListRef height
 function getPrizeListHeight() {
   let height = 200
   if (prizeListRef.value) {
@@ -333,7 +333,7 @@ onMounted(() => {
 }
 
 .prize-operate-enter-active {
-    // 延时显示
+    // Delayed display
     animation: show-operate 0.6s;
     -webkit-animation: show-operate 0.6s;
 }
